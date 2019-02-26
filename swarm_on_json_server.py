@@ -14,7 +14,9 @@ class UserBehaviour(TaskSet):
 
     @task(1)
     def comments(self):
-        self.client.post("/comments",  {"body": "new comment","postId": 1})
+        response = self.client.post("/comments",  {"body": "new comment","postId": 1})
+        new_comment_id = response.json()['id']
+        self.client.delete("/comments/" + str(new_comment_id))
         self.client.get("/comments")
 
 class WebsiteUser(HttpLocust):
