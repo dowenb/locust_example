@@ -9,15 +9,15 @@ class UserBehaviour(TaskSet):
     def posts(self):
         response = self.client.post("/posts",  {"title": "new post","author": "Scale"})
         new_post_id = response.json()['id']
+        self.client.get("/posts/"  + str(new_post_id))
         self.client.delete("/posts/" + str(new_post_id))
-        self.client.get("/posts")
 
     @task(1)
     def comments(self):
         response = self.client.post("/comments",  {"body": "new comment","postId": 1})
         new_comment_id = response.json()['id']
+        self.client.get("/comments/" + str(new_comment_id))
         self.client.delete("/comments/" + str(new_comment_id))
-        self.client.get("/comments")
 
 class WebsiteUser(HttpLocust):
     task_set = UserBehaviour
