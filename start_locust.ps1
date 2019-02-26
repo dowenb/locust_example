@@ -1,0 +1,1 @@
+locust -f swarm_on_json_server.py --host=http://localhost:3000
